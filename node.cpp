@@ -4,6 +4,7 @@
 
 #include "node.h"
 #include <string>
+#include <cassert>
 
 namespace coen79_lab7
 {
@@ -49,19 +50,19 @@ namespace coen79_lab7
     
     
     	void list_tail_insert(node*& tail, const std::string &newName, const float &newPrice) {
-		assert(tail->link()==NULL);
-		node* new_tail = new(newName, newPrice, NULL);
-		tail->set_link(new_tail);
+		assert(tail->getLink()==NULL);
+		node* new_tail = new node(newName, newPrice, NULL);
+		tail->setLink(new_tail);
 		tail = new_tail; 	//This function actually changes tail becaus it is passed by reference 	
         // COMPLETE THE IMPLEMENTATION...
     	}
     
     
     	void list_clear(node*& head) {
-	    	node* cursor = head, precursor;
+	    	node* cursor = head, *precursor;
 	    	while(cursor){
 	    		precursor = cursor;
-	    		cursor = cursor->link()
+	    		cursor = cursor->getLink();
 	    		delete [] precursor;
 	    	}
 	    	head = NULL;
@@ -88,14 +89,13 @@ namespace coen79_lab7
         }
     }
     
-    
-    void list_head_remove(node*& head) {
-    	assert(!head);
-    	node * precursor = head;
-    	head=head->link();
-    	delete [] precursor;    		
-        // COMPLETE THE IMPLEMENTATION...
-    }
+    	void list_head_remove(node*& head) {
+	    	assert(head);
+	    	node * precursor = head;
+	    	head=head->getLink();
+	    	delete [] precursor;    		
+		// COMPLETE THE IMPLEMENTATION...
+    	}
     
     
     void list_print(node *head) {
