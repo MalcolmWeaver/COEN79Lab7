@@ -12,14 +12,14 @@ int main(){
 	*/
 	// how do you know if the node was allocated dynamically or statically
 	//node * tail_ptr = c_ptr;
-	node* head, *tail;
+	node * head, *tail;
 	list_init(head, tail, "NODE1", 1); 
-	list_tail_insert(tail, "NODE4", 8);
-	list_tail_insert(tail, "NODE5", 16);
+	//list_tail_insert(tail, "NODE4", 8);
+	//list_tail_insert(tail, "NODE5", 16);
 	list_print(head);
-	list_head_remove(head);
-	list_head_remove(head);
-	list_print(head);
+	//list_head_remove(head);
+	//list_head_remove(head);
+	//list_print(head);
 	list_clear(head);
 }
 
