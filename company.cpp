@@ -39,7 +39,9 @@ namespace coen79_lab7
     
     company& company::operator= (const company &src) {
         Debug("Company assignemnt operator..." << std::endl);
-
+	company_name = src.company_name;
+	list_copy(src.head_ptr, head_ptr, tail_ptr);
+	return *this;
         // COMPLETE THE IMPLEMENTATION...
     }
     
@@ -83,9 +85,14 @@ namespace coen79_lab7
         }
         
         if (head_ptr == NULL) {
+        	list_init(head_ptr, tail_ptr, product_name, price);
+        	
             // COMPLETE THE IMPLEMENTATION...
         }
         else {
+        	bool is_dup = list_search(head_ptr, product_name); 
+        	list_tail_insert(tail_ptr, product_name, price);
+        	return is_dup;
             // COMPLETE THE IMPLEMENTATION...
         }
         
@@ -95,7 +102,13 @@ namespace coen79_lab7
     
     bool company::erase(const std::string& product_name) {
         assert(product_name.length() > 0);
-
+        // assume exacly 1 product named product_name
+	node* target_ptr = list_search(head_ptr, product_name);
+	if(target_ptr == NULL){return false;}
+	target_ptr->setName(head_ptr->getName());
+	target_ptr->setName(head_ptr->getName());
+	list_head_remove(head_ptr);
+	return true;
         // COMPLETE THE IMPLEMENTATION...
     }
     
