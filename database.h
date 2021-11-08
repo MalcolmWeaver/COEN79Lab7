@@ -31,6 +31,7 @@
 //      Postcondition: A new product is added to the list pertaining to the company
 //      This function also checks to see if the company is already in the database.
 //      Returns false if the compnay is already in the database, otherwise returns true.
+	//I assume this means return false if item is in company or if company not in list
 //
 //  bool erase_item(const std::string &company_name, const std::string& product_name)
 //      Precondition: company_name and product_name are non-empty strings

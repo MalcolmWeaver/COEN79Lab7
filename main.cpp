@@ -18,7 +18,7 @@ int main(int argc, const char * argv[]) {
     myDB1.insert_company("Intel");
     myDB1.insert_company("NVIDIA");
     myDB1.insert_company("Cypress");
-/*
+
     std::cout << "\nPrinting myDB1...\n";
     myDB1.print_companies();
 
@@ -42,7 +42,7 @@ int main(int argc, const char * argv[]) {
     myDB1.print_items_by_company("Apple");
     myDB1.print_items_by_company("Intel");
 
-    
+/*    
     std::cout << "\nCreating myDB2 on heap...\n";
     database *myDB2 = new database();
     myDB2->insert_company("Google");

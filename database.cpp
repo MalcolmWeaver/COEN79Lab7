@@ -40,7 +40,7 @@ namespace coen79_lab7
 	aloc_slots = src.aloc_slots;
 	assert(aloc_slots >= used_slots);
 	reserve(aloc_slots);
-	for(int i; i < used_slots; ++i){
+	for(int i=0; i < used_slots; ++i){
 		company_array[i] = company(src.company_array[i]); // copy constructor. we dynamically allocated the lists within companies, but not the companies themselves
 	}
         // COMPLETE THE IMPLEMENTATION...
@@ -53,7 +53,7 @@ namespace coen79_lab7
 	reserve(rhs.aloc_slots); // could decrease size. sets aloc_slots
 	assert(aloc_slots >= used_slots);
 	
-	for(int i; i < used_slots; ++i){
+	for(int i=0; i < used_slots; ++i){
 		company_array[i] = company(rhs.company_array[i]); // copy constructor. we dynamically allocated the lists within companies, but not the companies themselves
 	}
         // COMPLETE THE IMPLEMENTATION...
@@ -62,7 +62,7 @@ namespace coen79_lab7
     
     database::~database() {
         // COMPLETE THE IMPLEMENTATION...
-    	//for(int i; i < used_slots; ++i){
+    	//for(int i=0; i < used_slots; ++i){
     	//	list_clear(company_array[i].get_head());
     	//}
     	delete [] company_array;
@@ -80,10 +80,11 @@ namespace coen79_lab7
         
         company  * old_company_arr = company_array; // copy of a pointer
         company_array = new company[new_capacity];
-        //for(int i; i < used_slots; ++i){
+        for(int i=0; i < used_slots; ++i){
+    		company_array[i] = old_company_arr[i];	
     	//	list_copy(old_company_arr[i].get_head(), company_array[i].get_head(), company_array[i].get_tail());
     	//	list_clear(old_company_arr[i].get_head()); 		
-    	//}
+    	}
     	delete [] old_company_arr;
     	aloc_slots = new_capacity;
         // COMPLETE THE IMPLEMENTATION...
@@ -118,7 +119,12 @@ namespace coen79_lab7
         Debug("Insert item..." << std::endl);
 
         assert(company.length() > 0 && product_name.length() > 0);
-
+        size_type pos = search_company(company);
+        if(pos == COMPANY_NOT_FOUND){
+        	return false;
+        }
+	
+	return company_array[pos].insert(product_name, price);
         // COMPLETE THE IMPLEMENTATION...
         
     }
