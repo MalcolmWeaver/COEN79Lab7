@@ -26,6 +26,8 @@ int main(int argc, const char * argv[]) {
     std::cout << "\nInserting company names to invoke reserve...!\n";
     myDB1.insert_item("Intel", "Core i7", 300.0);
     myDB1.insert_item("Intel", "Core i5", 200.0);
+    
+    myDB1.erase_company("Cypress");
     std::cout << "\nPrinting myDB1...\n";
     myDB1.print_items_by_company("Intel");
 
@@ -42,7 +44,7 @@ int main(int argc, const char * argv[]) {
     myDB1.print_items_by_company("Apple");
     myDB1.print_items_by_company("Intel");
 
-/*    
+    
     std::cout << "\nCreating myDB2 on heap...\n";
     database *myDB2 = new database();
     myDB2->insert_company("Google");
@@ -74,6 +76,6 @@ int main(int argc, const char * argv[]) {
     delete myDB2;
     delete myDB3;
 
-*/    
+    
     return 0;
 }

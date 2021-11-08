@@ -56,6 +56,7 @@ namespace coen79_lab7
 	for(int i=0; i < used_slots; ++i){
 		company_array[i] = company(rhs.company_array[i]); // copy constructor. we dynamically allocated the lists within companies, but not the companies themselves
 	}
+	return *this;
         // COMPLETE THE IMPLEMENTATION...
     }
     
@@ -133,7 +134,18 @@ namespace coen79_lab7
     bool database::erase_company(const std::string &company) {
         
         size_type company_index = search_company(company);
-        
+        if(company_index == COMPANY_NOT_FOUND){
+        	return false;
+        }
+        for(int i = company_index; i < used_slots-1; ++i){
+        	company_array[i] = company_array[i+1];
+        }
+        //edge case where array is exactly 1 element
+        //if(used_slots == 1){
+        //	used_slots
+        //}
+        --used_slots;
+        return true;
         // COMPLETE THE IMPLEMENTATION...
     }
     
@@ -141,7 +153,9 @@ namespace coen79_lab7
     bool database::erase_item(const std::string& cName, const std::string& pName) {
         
         assert(cName.length() > 0 && pName.length() > 0);
-
+	size_type c_index = search_company(cName);
+	if(c_index == COMPANY_NOT_FOUND){return false;}
+	return company_array[c_index].erase(pName);
         // COMPLETE THE IMPLEMENTATION...
     }
     
