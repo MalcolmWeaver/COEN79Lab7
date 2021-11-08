@@ -63,7 +63,7 @@ namespace coen79_lab7
 	    	while(cursor){
 	    		precursor = cursor;
 	    		cursor = cursor->getLink();
-	    		delete [] precursor;
+	    		delete precursor;
 	    	}
 	    	head = NULL;
 	    	// Tail shouldn't exist in the first place
@@ -93,7 +93,7 @@ namespace coen79_lab7
 	    	assert(head);
 	    	node * precursor = head;
 	    	head=head->getLink();
-	    	delete [] precursor;    		
+	    	delete precursor;    		
 		// COMPLETE THE IMPLEMENTATION...
     	}
     
