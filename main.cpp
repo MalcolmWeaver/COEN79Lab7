@@ -18,7 +18,7 @@ int main(int argc, const char * argv[]) {
     myDB1.insert_company("Intel");
     myDB1.insert_company("NVIDIA");
     myDB1.insert_company("Cypress");
-
+/*
     std::cout << "\nPrinting myDB1...\n";
     myDB1.print_companies();
 
@@ -74,6 +74,6 @@ int main(int argc, const char * argv[]) {
     delete myDB2;
     delete myDB3;
 
-    
+*/    
     return 0;
 }

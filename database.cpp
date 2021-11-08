@@ -36,32 +36,55 @@ namespace coen79_lab7
     
     database::database(const database &src) {
         Debug("Copy constructor..." << std::endl);
-
+	used_slots = src.used_slots;
+	aloc_slots = src.aloc_slots;
+	assert(aloc_slots >= used_slots);
+	reserve(aloc_slots);
+	for(int i; i < used_slots; ++i){
+		company_array[i] = company(src.company_array[i]); // copy constructor. we dynamically allocated the lists within companies, but not the companies themselves
+	}
         // COMPLETE THE IMPLEMENTATION...
     }
     
     
     database& database::operator= (const database &rhs) {
         Debug("Assignment operator..." << std::endl);
-
+	used_slots = rhs.used_slots;
+	aloc_slots = rhs.aloc_slots;
+	assert(aloc_slots >= used_slots);
+	reserve(aloc_slots); // could decrease size
+	for(int i; i < used_slots; ++i){
+		company_array[i] = company(rhs.company_array[i]); // copy constructor. we dynamically allocated the lists within companies, but not the companies themselves
+	}
         // COMPLETE THE IMPLEMENTATION...
     }
     
     
     database::~database() {
         // COMPLETE THE IMPLEMENTATION...
+    	for(int i; i < used_slots; ++i){
+    		list_clear(company_array[i].get_head());
+    	}
+    	delete [] company_array;
     }
     
     
     void database::reserve(size_type new_capacity) {
         Debug("Reserve..." << std::endl);
-
+	// remember to delete first
         if (new_capacity == aloc_slots)
             return; // The allocated memory is already the right size.
         
         if (new_capacity < used_slots)
             new_capacity = used_slots; // Canít allocate less than we are using.
         
+        company  * old_company_arr = company_array; // copy of a pointer
+        company_array = new company[new_capacity];
+        for(int i; i < used_slots; ++i){
+    		list_copy(old_company_arr[i].get_head(), company_array[i].get_head(), company_array[i].get_tail());
+    		list_clear(old_company_arr[i].get_head()); 		
+    	}
+    	delete [] old_company_arr;
         // COMPLETE THE IMPLEMENTATION...
     }
     
@@ -78,7 +101,15 @@ namespace coen79_lab7
         if (pos != COMPANY_NOT_FOUND) {
             return false;
         }
-
+	
+	if(used_slots >= aloc_slots){
+		aloc_slots *= 2;
+		reserve(aloc_slots);
+	}
+	
+	company_array[used_slots] = company(entry);
+	++used_slots;
+	return true;
         // COMPLETE THE IMPLEMENTATION...
     }
     
@@ -112,7 +143,11 @@ namespace coen79_lab7
     
     database::size_type database::search_company(const std::string& company) {
         assert(company.length() > 0);
-
+        assert(aloc_slots >= used_slots);
+	for(int i = 0; i < used_slots; ++i){
+		if(company_array[i].get_name() == company){return i;}// string comaprison 
+	}
+	return COMPANY_NOT_FOUND;
         // COMPLETE THE IMPLEMENTATION...
     }
     
