@@ -50,9 +50,9 @@ namespace coen79_lab7
     database& database::operator= (const database &rhs) {
         Debug("Assignment operator..." << std::endl);
 	used_slots = rhs.used_slots;
-	aloc_slots = rhs.aloc_slots;
+	reserve(rhs.aloc_slots); // could decrease size. sets aloc_slots
 	assert(aloc_slots >= used_slots);
-	reserve(aloc_slots); // could decrease size
+	
 	for(int i; i < used_slots; ++i){
 		company_array[i] = company(rhs.company_array[i]); // copy constructor. we dynamically allocated the lists within companies, but not the companies themselves
 	}
@@ -62,9 +62,9 @@ namespace coen79_lab7
     
     database::~database() {
         // COMPLETE THE IMPLEMENTATION...
-    	for(int i; i < used_slots; ++i){
-    		list_clear(company_array[i].get_head());
-    	}
+    	//for(int i; i < used_slots; ++i){
+    	//	list_clear(company_array[i].get_head());
+    	//}
     	delete [] company_array;
     }
     
@@ -80,11 +80,12 @@ namespace coen79_lab7
         
         company  * old_company_arr = company_array; // copy of a pointer
         company_array = new company[new_capacity];
-        for(int i; i < used_slots; ++i){
-    		list_copy(old_company_arr[i].get_head(), company_array[i].get_head(), company_array[i].get_tail());
-    		list_clear(old_company_arr[i].get_head()); 		
-    	}
+        //for(int i; i < used_slots; ++i){
+    	//	list_copy(old_company_arr[i].get_head(), company_array[i].get_head(), company_array[i].get_tail());
+    	//	list_clear(old_company_arr[i].get_head()); 		
+    	//}
     	delete [] old_company_arr;
+    	aloc_slots = new_capacity;
         // COMPLETE THE IMPLEMENTATION...
     }
     
@@ -103,8 +104,7 @@ namespace coen79_lab7
         }
 	
 	if(used_slots >= aloc_slots){
-		aloc_slots *= 2;
-		reserve(aloc_slots);
+		reserve(2*aloc_slots);
 	}
 	
 	company_array[used_slots] = company(entry);
